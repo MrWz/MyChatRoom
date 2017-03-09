@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-//µ¥ÀıÄ£Ê½
+//å•ä¾‹æ¨¡å¼ Singleton
 public class DbConnector {
 	private Connection connection;
 	private PreparedStatement prestatement;
@@ -16,10 +16,10 @@ public class DbConnector {
 	
 	private DbConnector(){
 		try {
-			//¼ÓÔØjdbcµÄÇı¶¯
+			//åŠ è½½jdbcçš„é©±åŠ¨
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/chatroom";
-			//´´½¨ºÍmysql serverµÄÒ»¸öÁ¬½Ó
+			//åˆ›å»ºå’Œmysql serverçš„ä¸€ä¸ªè¿æ¥
 			connection = DriverManager.getConnection(url, "root", "111111");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
