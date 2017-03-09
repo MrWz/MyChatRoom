@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 
 //单例模式 Singleton
+//非线程安全的
 public class DbConnector {
 	private Connection connection;
 	private PreparedStatement prestatement;
