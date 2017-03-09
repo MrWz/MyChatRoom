@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
+//å®¢æˆ·ç«¯
 class GetMsgFromServer{
 	public static int aa;
 	public GetMsgFromServer(){
@@ -55,7 +56,7 @@ class ReaderTask implements Runnable{
 	}
 
 	@Override
-	public void run() {//¿Í»§¶Ë¶ÁÈ¡·şÎñÆ÷·¢À´ÏûÏ¢Ïß³ÌµÄÖ´ĞĞº¯Êı
+	public void run() {//å®¢æˆ·ç«¯è¯»å–æœåŠ¡å™¨å‘æ¥æ¶ˆæ¯çº¿ç¨‹çš„æ‰§è¡Œå‡½æ•°
 		// TODO Auto-generated method stub
 		while(!Thread.currentThread().isInterrupted()){
 			//System.out.println("run...");
@@ -69,8 +70,8 @@ class ReaderTask implements Runnable{
 			
 			int msgtype = object.get("msgtype").getAsInt();
 			switch(msgtype){
-			case 20: //½ÓÊÕ·şÎñÆ÷ackÏìÓ¦ÏûÏ¢µÄ
-				//´¦ÀíµÇÂ¼ÏûÏ¢
+			case 20: //æ¥æ”¶æœåŠ¡å™¨ackå“åº”æ¶ˆæ¯çš„
+				//å¤„ç†ç™»å½•æ¶ˆæ¯
 				String ack = object.get("ack").getAsString();
 				if(ack.compareTo("fail") == 0){
 					System.out.println("login fail!");
@@ -86,7 +87,7 @@ class ReaderTask implements Runnable{
 					System.out.println("register fail!");
 					System.out.println(object.get("reason").getAsString());
 				}else{
-					System.out.println("register success!");//£¿£¿£¿ÏÔÊ¾²»³öÀ´
+					System.out.println("register success!");//ï¼Ÿï¼Ÿï¼Ÿæ˜¾ç¤ºä¸å‡ºæ¥
 				}
 				break;
 			case 18:
@@ -99,7 +100,7 @@ class ReaderTask implements Runnable{
 				break;
 			case 16:
 				String offmsg=object.get("offmsg").getAsString();
-				System.out.println("ÄúÓĞÀëÏßÏûÏ¢"+offmsg);
+				System.out.println("æ‚¨æœ‰ç¦»çº¿æ¶ˆæ¯"+offmsg);
 				break;
 			case 6:
 				String result=object.get("result").getAsString();
@@ -127,20 +128,20 @@ class ReaderTask implements Runnable{
 
 public class ClientNIO {
 	public static GetMsgFromServer syn=new GetMsgFromServer();
-	private static Lock lock = new ReentrantLock();// Ëø¶ÔÏó
+	private static Lock lock = new ReentrantLock();// é”å¯¹è±¡
 	
 	public static void sendMessage(PrintWriter out,String username){
 		Scanner scan=new Scanner(System.in);
 		String name=null;
-		System.out.println("ÊäÈëÏûÏ¢½ÓÊÕÕßµÄÃû×Ö£º");
+		System.out.println("è¾“å…¥æ¶ˆæ¯æ¥æ”¶è€…çš„åå­—ï¼š");
 		name=scan.nextLine();
 		
 		String message=null;
-		System.out.println("ÊäÈëÏûÏ¢ÄÚÈİ£º");
+		System.out.println("è¾“å…¥æ¶ˆæ¯å†…å®¹ï¼š");
 		message=scan.nextLine();
 		
 		JsonObject json = new JsonObject();
-		json.addProperty("msgtype", 4);//·¢ËÍÏûÏ¢
+		json.addProperty("msgtype", 4);//å‘é€æ¶ˆæ¯
 		json.addProperty("from", username);
 		json.addProperty("to", name);
 		json.addProperty("msg", message);
@@ -150,12 +151,12 @@ public class ClientNIO {
 	
 	public static void offLine(PrintWriter out,String username){
 		JsonObject json = new JsonObject();
-		json.addProperty("msgtype", 5);//ÓÃ»§ÏÂÏß
+		json.addProperty("msgtype", 5);//ç”¨æˆ·ä¸‹çº¿
 		json.addProperty("from", username);
 	
 		out.println(json.toString());
 	}
-	public static void main(String[] args) {//Ğ´²Ù×÷Ïß³Ì
+	public static void main(String[] args) {//å†™æ“ä½œçº¿ç¨‹
 		// TODO Auto-generated method stub
 		try {
 			ExecutorService threadpool = Executors.newSingleThreadExecutor();
@@ -171,16 +172,16 @@ public class ClientNIO {
 				System.out.println("                                      *      2.register   *");
 				System.out.println("                                      *      3.exit       *");
 				System.out.println("                                      *********************");
-				System.out.print("ÇëÊäÈëÄúµÄÑ¡Ôñ£º");
+				System.out.print("è¯·è¾“å…¥æ‚¨çš„é€‰æ‹©ï¼š");
 				Scanner s=new Scanner(System.in);
 				
 				
 				int t=s.nextInt();
 				if(t==1){
 					Scanner scan = new Scanner(System.in);
-					System.out.println("ÇëÊäÈëÄãµÄÓÃ»§Ãû£º");
+					System.out.println("è¯·è¾“å…¥ä½ çš„ç”¨æˆ·åï¼š");
 					String name=scan.nextLine();
-					System.out.println("ÇëÊäÈëÄãµÄÃÜÂë£º");
+					System.out.println("è¯·è¾“å…¥ä½ çš„å¯†ç ï¼š");
 					int pwd=scan.nextInt();
 							
 					JsonObject json = new JsonObject();
@@ -192,7 +193,7 @@ public class ClientNIO {
 					out.println(json.toString());
 					
 					try {
-						Thread.sleep(100);//ÈÃ×ÓÏß³ÌÏÈ»ñµÃËø¡£
+						Thread.sleep(100);//è®©å­çº¿ç¨‹å…ˆè·å¾—é”ã€‚
 						lock.lock();
 						Scanner scanner=new Scanner(client.getInputStream());
 						String recvMsg = scanner.nextLine();
@@ -219,9 +220,9 @@ public class ClientNIO {
 				}
 				else if(t==2){
 					Scanner scan = new Scanner(System.in);
-					System.out.println("ÊäÈëĞÂÓÃ»§Ãû£º");
+					System.out.println("è¾“å…¥æ–°ç”¨æˆ·åï¼š");
 					String name=scan.nextLine();
-					System.out.println("ÊäÈëÃÜÂë£º");
+					System.out.println("è¾“å…¥å¯†ç ï¼š");
 					int pwd=scan.nextInt();
 					
 					JsonObject json = new JsonObject();
@@ -256,16 +257,16 @@ public class ClientNIO {
 					System.out.println("                                      *      1.Chat       *");;
 					System.out.println("                                      *      2.Offline    *");
 					System.out.println("                                      *********************");
-					System.out.print("ÇëÊäÈëÄúµÄÑ¡Ôñ£º");
+					System.out.print("è¯·è¾“å…¥æ‚¨çš„é€‰æ‹©ï¼š");
 					Scanner s=new Scanner(System.in);
 					int n=s.nextInt();
 			
 					if(n==1){
-						System.out.println("**************ÄúÒÑ¾­½øÈë·¢ËÍÏûÏ¢Ò³Ãæ**********");
+						System.out.println("**************æ‚¨å·²ç»è¿›å…¥å‘é€æ¶ˆæ¯é¡µé¢**********");
 						sendMessage(out,username);
 					}
 					else{
-						System.out.println("**************Äú¼´½«ÏÂÏß**********");
+						System.out.println("**************æ‚¨å³å°†ä¸‹çº¿**********");
 						offLine(out,username);
 						//out.close();
 						client.close();
